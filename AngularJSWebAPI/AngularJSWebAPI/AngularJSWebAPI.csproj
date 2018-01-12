@@ -89,6 +89,12 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\controller.js" />
+    <Content Include="Scripts\factory.js" />
+    <Content Include="Scripts\library\angular.js" />
+    <Content Include="Scripts\library\bootstrap.js" />
+    <Content Include="Scripts\library\bootstrap.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

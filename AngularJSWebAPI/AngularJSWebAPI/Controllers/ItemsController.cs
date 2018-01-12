@@ -17,7 +17,7 @@ namespace AngularJSWebAPI.Controllers
         private ItemContext db = new ItemContext();
 
         // GET: api/Items
-        public IQueryable<Item> GetItems()
+        public IEnumerable<Item> GetItems()
         {
             return db.Items;
         }
