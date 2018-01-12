@@ -23,66 +23,30 @@ namespace AngularJSWebAPI.Controllers
         }
 
         // GET: api/Items/5
-        [ResponseType(typeof(Item))]
-        public IHttpActionResult GetItem(int id)
-        {
-            Item item = db.Items.Find(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(item);
-        }
-
-        // PUT: api/Items/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutItem(int id, Item item)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != item.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(item).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        
 
         // POST: api/Items
         [ResponseType(typeof(Item))]
-        public IHttpActionResult PostItem(Item item)
+        public Item PostItem(Item item)
         {
-            if (!ModelState.IsValid)
+            if (item!=null)
             {
-                return BadRequest(ModelState);
+                Item it = new Item();
+
+                it.Name = item.Name;
+                it.Description = item.Description;
+                it.Count = item.Count;
+                db.Items.Add(it);
+                db.SaveChanges();
+
+                return it;
             }
-
-            db.Items.Add(item);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = item.Id }, item);
+            else
+            {
+                return null;
+            }
+           
         }
 
         // DELETE: api/Items/5
@@ -101,6 +65,12 @@ namespace AngularJSWebAPI.Controllers
             return Ok(item);
         }
 
+        // PUT: api/Items/5
+        [ResponseType(typeof(void))]
+        public IEnumerable<Item> PutItem(Item item)
+        {
+            return db.Items;
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
