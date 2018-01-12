@@ -30,8 +30,7 @@ namespace AngularJSWebAPI.Controllers
         [ResponseType(typeof(Item))]
         public Item PostItem(Item item)
         {
-            if (item!=null)
-            {
+            
                 Item it = new Item();
 
                 it.Name = item.Name;
@@ -40,13 +39,7 @@ namespace AngularJSWebAPI.Controllers
                 db.Items.Add(it);
                 db.SaveChanges();
 
-                return it;
-            }
-            else
-            {
-                return null;
-            }
-           
+                return it;          
         }
 
         // DELETE: api/Items/5
