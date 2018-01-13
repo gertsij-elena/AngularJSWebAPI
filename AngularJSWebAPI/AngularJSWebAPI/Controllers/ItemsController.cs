@@ -17,32 +17,31 @@ namespace AngularJSWebAPI.Controllers
         private ItemContext db = new ItemContext();
 
         // GET: api/Items
+        [HttpGet]
         public IEnumerable<Item> GetItems()
         {
             return db.Items;
         }
 
-        // GET: api/Items/5
-
-        
-
         // POST: api/Items
+        [HttpPost]
         [ResponseType(typeof(Item))]
         public Item PostItem(Item item)
         {
-            
-                Item it = new Item();
 
-                it.Name = item.Name;
-                it.Description = item.Description;
-                it.Count = item.Count;
-                db.Items.Add(it);
-                db.SaveChanges();
+            Item it = new Item();
 
-                return it;          
+            it.Name = item.Name;
+            it.Description = item.Description;
+            it.Count = item.Count;
+            db.Items.Add(it);
+            db.SaveChanges();
+
+            return it;
         }
 
         // DELETE: api/Items/5
+        [HttpDelete]
         [ResponseType(typeof(Item))]
         public IHttpActionResult DeleteItem(int id)
         {
@@ -58,12 +57,13 @@ namespace AngularJSWebAPI.Controllers
             return Ok(item);
         }
 
-        // PUT: api/Items/5
-        [ResponseType(typeof(void))]
-        public IEnumerable<Item> PutItem(Item item)
-        {
-            return db.Items;
-        }
+        //// PUT: api/Items/5
+        //[HttpPut]
+        //[ResponseType(typeof(void))]
+        //public IEnumerable<Item> PutItem(Item item)
+        //{
+        //    return db.Items;
+        //}
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -78,4 +78,5 @@ namespace AngularJSWebAPI.Controllers
             return db.Items.Count(e => e.Id == id) > 0;
         }
     }
+
 }

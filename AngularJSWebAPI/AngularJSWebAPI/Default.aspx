@@ -10,18 +10,19 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="text/javascript" src="/Scripts/library/angular.js"></script>
     <script type="text/javascript" src="/Scripts/app.js"></script>
-    <script type="text/javascript" src="/Scripts/controller.js"></script>
     <script type="text/javascript" src="/Scripts/factory.js"></script>
+    <script type="text/javascript" src="/Scripts/controller.js"></script>    
+    <script type="text/javascript" src="/Scripts/filter.js"></script>
 </head>
 <body>
-    <form id="form1" runat="server">
+   <form id="form1" runat="server">
     <div ng-app="testapp" ng-controller="testController">        
-            {{model}} 
-                      
+    
         SelectedName:<input type="text" ng-model="selectedName" />
         SelectedDescription:<input type="text" ng-model="selectedDescription" />
         SelectedCount:<input type="text" ng-model="selectedCount" />
-        <table>
+ 
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th hidden="hidden">ID</th>
@@ -33,31 +34,38 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="item in itemsData">
+                <tr ng-repeat="item in itemsData|filter:selectedName|filter:selectedCount|filter:selectedDescription|pagination : currentPage*itemsPerPage | limitTo: itemsPerPage">
                     <td hidden="hidden">{{item.Id}}</td>
                     <td>{{item.Name}}</td>
                     <td>{{item.Description}}</td>
                     <td>{{item.Count}}</td>
                      <td>
-                        <button ng-click="edit(itemsData[$index])">Update</button>
+                       <%-- <button ng-click="edit(item])">Update</button>--%>
                     </td>
                     <td>
-                        <button ng-click="delete($index)">Delete</button>
+                        <button ng-click="delete(item)">Delete</button>
                     </td>
                 </tr>
             </tbody>
         </table>
         <br/>
-           <div ng-class="row">           
-    <div class="col-md-12" >    
-      <a href="" ng-click="prevPage()">« Prev</a>
-      <div ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)" style="display:inline">
-        <a href="#" style="font-size:20px;">{{n+1}}</a>
-      </div>
-      <a href="" ng-click="nextPage()">Next »</a>     
-   </div>            
- 
-        <div ng-hide="Items.Id != '' ">
+      
+        <div class="pagination-div">
+        <ul class="pagination">
+              <li ng-class="DisablePrevPage()">
+                <a href ng-click="prevPage()">« Prev</a>
+              </li>
+              <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)" style="display:inline">
+                <a href="#">{{n+1}},</a>
+              </li>
+              <li ng-class="DisableNextPage()">
+                <a href ng-click="nextPage()">Next »</a>
+                 
+              </li>
+            </ul>
+       </div>
+
+       <%-- <div ng-hide="Items.Id != '' ">--%>
             <div>
                 <h2>Add</h2>
             </div>
@@ -84,7 +92,7 @@
                 <button data-ng-click="save()">Save</button>
                 <button data-ng-click="cancel()">Cancel</button>
             </div>
-        </div>
+        <%--</div>--%>
         <div ng-show="Items.Id != '' ">
             <div>
                 <h2>Изменить</h2>
