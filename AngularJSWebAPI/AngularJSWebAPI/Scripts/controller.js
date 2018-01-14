@@ -6,10 +6,11 @@
         .controller('testController', controller);
     function controller($scope, $http, testService) {
         $scope.itemsData = null;
-
+        $scope.add = false;
+        $scope.upd = false;
         //GetAllItems
         testService.GetAllRecords().then(function (response) {
-            alert("success");
+            console.log("success");
             $scope.itemsData = response.data;
             $scope.clear();
         }, function () {
@@ -22,7 +23,14 @@
             Description: '',
             Count: ''
         };
-        //clear enter
+
+        $scope.ItemUpdate = {
+            Id: '',
+            Name: '',
+            Description: '',
+            Count: ''
+        };
+        //clear add
         $scope.clear = function () {
             $scope.Items.Id = '';
             $scope.Items.Name = '';
@@ -30,70 +38,77 @@
             $scope.Items.Count = ''
         };
 
-        //AddItem
-        $scope.save = function () {
-            alert("save");
-            alert($scope.Items.Id);
-            alert($scope.Items.Name);
-            alert($scope.Items.Count);
-            if ($scope.Items.Name != "" &&
-                $scope.Items.Description != "" && $scope.Items.Count != "") {
-                testService.AddNewRecords($scope.Items)
-                    .then(function successCallback(response) {                      
-                        $scope.itemsData.push(response.data);
-                        $scope.apply();
-                        $scope.clear();
-                        alert("Item Added Successfully !!!");
-
-                    }, function errorCallback(response) {
-                        console.log("Error : " + response.data.ExceptionMessage);
-                    });
-            }
-            else {
-                alert('Please Enter the Name');
-            }
-        };
         // Delete item       
         $scope.delete = function (item) {
-            //alert("delete");
-            //alert(item.Id);
+            alert("delete");
+            alert(item.Id);
             var id = parseInt(item.Id);
             testService.DeleteRecords(id)
                 .then(function successCallback(response) {
-                    alert(response);
-                    $scope.itemsData.splice(idx, 1);
-                    $scope.apply();
+                    alert(response.data);  
+                    $scope.itemsData = response.data;
+                    $scope.$apply();
                 },
                 function errorCallback(response) {
                     alert("Error : " + response.data.ExceptionMessage);
                 });
         };
 
+        //cansel add form
         $scope.cancel = function () {
             $scope.clear();
+            $scope.add = false;
         };
-        //edit
-        $scope.edit = function (data) {
-            $scope.Items = { Id: data.Id, Name: data.Name, Description: data.Description, Count: data.Count };
 
+        //close update form
+        $scope.close = function () {
+            $scope.upd = false;
+        }
+
+        //show AddForm
+        $scope.showAdd = function () {
+            $scope.add = true;
+        }
+        //Add Item
+        $scope.submit = function () {
+            console.log("submit");
+
+         testService.AddNewRecords($scope.Items)
+         .then(function successCallback(response) {
+             $scope.itemsData.push(response.data);                       
+                $scope.$apply();
+                $scope.clear(); 
+                $scope.add = false;
+
+               }, function errorCallback(response) {
+               console.log("Error : " + response.data.ExceptionMessage);
+            });
+        }
+       
+        //edit
+        $scope.edit = function (item) {
+            $scope.ItemEdit = {Id:item.Id,Name:item.Name,Description:item.Description,Count:item.Count };
+            $scope.upd = true;
         };
         //Update item       
-        //$scope.update = function () {
-        //    alert("update");
-        //    var id = it.Id;
-        //    alert(id);
-        //    testService.UpdateRecords($scope.Items)
-        //        .then(function successCallback(response) {
-        //            alert(response);
-        //            $scope.itemsData = response.data;
-        //            $scope.clear();
-        //        },
-        //        function errorCallback(response) {
-        //            alert("Error : " + response.data.ExceptionMessage);
-        //        });
-        //};
+        $scope.update = function () {
+            console.log("update");
+            var itemId = $scope.ItemEdit.Id;
+            var id = parseInt(itemId);
+          
+          testService.UpdateRecords(id,$scope.ItemEdit)
+          .then(function successCallback(response) {
+                    //console.log(response.data);
+                    $scope.itemsData = response.data;
+                    $scope.$apply();
+                    $scope.clear();
+                },
+                function errorCallback(response) {
+                    alert("Error : " + response.data.ExceptionMessage);
+                });
+        };
         //make pagination
-        $scope.itemsPerPage = 3;
+        $scope.itemsPerPage = 10;
         $scope.currentPage = 0;
 
         $scope.range = function () {

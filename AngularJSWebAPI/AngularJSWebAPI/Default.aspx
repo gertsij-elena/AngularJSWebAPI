@@ -15,7 +15,7 @@
     <script type="text/javascript" src="/Scripts/filter.js"></script>
 </head>
 <body>
-   <form id="form1" runat="server">
+ 
     <div ng-app="testapp" ng-controller="testController">        
     
         SelectedName:<input type="text" ng-model="selectedName" />
@@ -40,7 +40,7 @@
                     <td>{{item.Description}}</td>
                     <td>{{item.Count}}</td>
                      <td>
-                       <%-- <button ng-click="edit(item])">Update</button>--%>
+                        <button ng-click="edit(item)">Update</button>
                     </td>
                     <td>
                         <button ng-click="delete(item)">Delete</button>
@@ -64,64 +64,71 @@
               </li>
             </ul>
        </div>
+    <button type="button" ng-click="showAdd()">Add new Item</button>
+        <form name="formAdd" novalidate ng-show="add">
+            <label>Name:<br>
+            <input type="text" name="name" data-ng-model="Items.Name" required="" ng-maxlength="50"/>
+            <span ng-show="formAdd.name.$touched && formAdd.name.$invalid">
+            <span ng-show="formAdd.name.$error.required">Name is required.</span>
+            <span ng-show="formAdd.name.$error.maxlength">Not more than 50 character</span>
+            </span>
+            </label>
 
-       <%-- <div ng-hide="Items.Id != '' ">--%>
-            <div>
-                <h2>Add</h2>
-            </div>
-            <div hidden="hidden">
-                <label for="ItemId">Id</label>
-                <input type="text" data-ng-model="Items.Id" />
-            </div>
-            <div>
-                <label for="name">Name</label>
-                <input type="text" data-ng-model="Items.Name" />
-            </div>
+            <p>Description:<br>
+            <input type="text" name="description" data-ng-model="Items.Description" required="" ng-minlength="5" ng-maxlength="4000"/>
+            <span ng-show="formAdd.description.$touched && formAdd.description.$invalid">
+            <span ng-show="formAdd.description.$error.required">Description is required.</span>
+            <span ng-show="formAdd.description.$error.minlength">Not less than 5 character</span>
+            <span ng-show="formAdd.description.$error.maxlength">Not more than 4000 character</span>
+            </span>
+            </p>
 
-            <div>
-                <label for="count">Count</label>
-                <input type="text" data-ng-model="Items.Count" />
-            </div>
+            <p>Count:<br>
+            <input type="text" name="count" data-ng-model="Items.Count" required="" min="1" max="1000"/>
+            <span ng-show="formAdd.count.$touched && formAdd.count.$invalid">
+            <span ng-show="formAdd.count.$error.required">Count is required.</span>
+            <span ng-show="formAdd.count.$error.min">So min</span>
+            <span ng-show="formAdd.count.$error.max">Too max</span>
+            </span>
+            </p>
 
-            <div>
-                <label for="description">Description</label>
-                <input type="text" data-ng-model="Items.Description" />
-            </div>
-            <br />
-            <div>
-                <button data-ng-click="save()">Save</button>
-                <button data-ng-click="cancel()">Cancel</button>
-            </div>
-        <%--</div>--%>
-        <div ng-show="Items.Id != '' ">
-            <div>
-                <h2>Изменить</h2>
-            </div>
-            <div hidden="hidden">
-                <label for="ItemId">Id</label>
-                <input type="text" data-ng-model="Items.Id" />
-            </div>
-            <div>
-                <label for="name">Name</label>
-                <input type="text" data-ng-model="Items.Name" />
-            </div>
+            <button type="submit" class="btn btn-primary" ng-disabled="formAdd.$invalid" ng-click="submit()">Save</button>
+            <button data-ng-click="cancel()">Cancel</button>
+        </form>
 
-            <div>
-                <label for="count">Count</label>
-                <input type="text" data-ng-model="Items.Count" />
-            </div>
+         <form name="formUpdate" novalidate ng-show="upd">
+            <label>Name:<br>
+            <input type="text" name="name" data-ng-model="ItemEdit.Name" required="" ng-maxlength="50"/>
+            <span ng-show="formUpdate.name.$touched && formUpdate.name.$invalid">
+            <span ng-show="formUpdate.name.$error.required">Name is required.</span>
+            <span ng-show="formUpdate.name.$error.maxlength">Not more than 50 character</span>
+            </span>
+            </label>
 
-            <div>
-                <label for="price">Description</label>
-                <input type="text" data-ng-model="Items.Description" />
-            </div>
-            <br />
-            <div>
-                <button data-ng-click="update()">Update</button>
-                <button data-ng-click="cancel()">Cancel</button>
-            </div>
-        </div>
+            <p>Description:<br>
+            <input type="text" name="description" data-ng-model="ItemEdit.Description" required="" ng-minlength="5" ng-maxlength="4000"/>
+            <span ng-show="formUpdate.description.$touched && formUpdate.description.$invalid">
+            <span ng-show="formUpdate.description.$error.required">Description is required.</span>
+            <span ng-show="formUpdate.description.$error.minlength">Not less than 5 character</span>
+            <span ng-show="formUpdate.description.$error.maxlength">Not more than 4000 character</span>
+            </span>
+            </p>
+
+            <p>Count:<br>
+            <input type="text" name="count" data-ng-model="ItemEdit.Count" required="" min="1" max="1000"/>
+            <span ng-show="formUpdate.count.$touched && formUpdate.count.$invalid">
+            <span ng-show="formUpdate.count.$error.required">Count is required.</span>
+            <span ng-show="formUpdate.count.$error.min">So min</span>
+            <span ng-show="formUpdate.count.$error.max">Too max</span>
+            </span>
+            </p>
+
+            <button type="submit" class="btn btn-primary" ng-disabled="formUpdate.$invalid" ng-click="update()">Update</button>
+            <button data-ng-click="close()">Close</button>
+        </form>
+
+       
     </div>
-    </form>
+ 
 </body>
 </html>

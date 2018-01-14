@@ -43,27 +43,34 @@ namespace AngularJSWebAPI.Controllers
         // DELETE: api/Items/5
         [HttpDelete]
         [ResponseType(typeof(Item))]
-        public IHttpActionResult DeleteItem(int id)
+        public IEnumerable<Item> DeleteItem(int id)
         {
             Item item = db.Items.Find(id);
-            if (item == null)
+            if (item != null)
             {
-                return NotFound();
+                db.Items.Remove(item);
+                db.SaveChanges();
             }
 
-            db.Items.Remove(item);
-            db.SaveChanges();
-
-            return Ok(item);
+            return db.Items; 
         }
 
         //// PUT: api/Items/5
-        //[HttpPut]
-        //[ResponseType(typeof(void))]
-        //public IEnumerable<Item> PutItem(Item item)
-        //{
-        //    return db.Items;
-        //}
+        [HttpPut]
+        [ResponseType(typeof(Item))]
+        public IEnumerable<Item> PutItem(int id,Item item)
+        {
+            Item it = db.Items.Find(id);
+            if (item != null)
+            {
+                it.Name = item.Name;
+                it.Description = item.Description;
+                it.Count = item.Count;
+                db.SaveChanges();
+            }
+
+            return db.Items;
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

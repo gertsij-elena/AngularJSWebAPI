@@ -18,9 +18,9 @@
         fac.DeleteRecords = function(id) {
             return $http.delete('/api/Items/'+id);
         };
-        //fac.UpdateRecords = function (id,item) {
-        //    return $http.put('/api/Items/'+id,item);
-        //};
+        fac.UpdateRecords = function (id,item) {
+            return $http.put('/api/Items/'+id,item);
+        };
         return fac;
     }
 })();
