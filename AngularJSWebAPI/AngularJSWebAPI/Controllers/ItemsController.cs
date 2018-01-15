@@ -50,13 +50,17 @@ namespace AngularJSWebAPI.Controllers
         public IEnumerable<Item> DeleteItem(int id)
         {
             Item item = db.Items.Find(id);
-            if (item != null)
+            try
             {
                 db.Items.Remove(item);
                 db.SaveChanges();
+                return db.Items;
             }
-
-            return db.Items; 
+            catch
+            {
+                return null;
+            }
+            
         }
 
         //// PUT: api/Items/5
@@ -65,15 +69,20 @@ namespace AngularJSWebAPI.Controllers
         public IEnumerable<Item> PutItem(int id,Item item)
         {
             Item it = db.Items.Find(id);
-            if (item != null)
+            try
             {
                 it.Name = item.Name;
                 it.Description = item.Description;
                 it.Count = item.Count;
                 db.SaveChanges();
+                return db.Items;
             }
-
-            return db.Items;
+            catch
+            {
+                return null;
+            }
+           
+           
         }
         protected override void Dispose(bool disposing)
         {
