@@ -79,7 +79,7 @@
             </p>
 
             <p>Description:<br>
-            <textarea maxlength="100" name="description" data-ng-model="Items.Description" required="" style="width:60%;height:20%;resize:none;"></textarea>
+            <textarea maxlength="50" name="description" data-ng-model="Items.Description" required="" style="width:60%;height:20%;resize:none;"></textarea>
             <span>*Not more than 50 character</span>
             <span ng-show="formAdd.description.$touched && formAdd.description.$invalid">
             <p style="color:red" ng-show="formAdd.description.$error.required">Description is required.</p>
