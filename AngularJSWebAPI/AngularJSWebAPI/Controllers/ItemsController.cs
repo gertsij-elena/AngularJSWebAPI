@@ -98,5 +98,4 @@ namespace AngularJSWebAPI.Controllers
             return db.Items.Count(e => e.Id == id) > 0;
         }
     }
-
 }

@@ -57,7 +57,6 @@
                     alert("Error : " + response.data.ExceptionMessage);
                 });
         };
-
         //cansel add form
         $scope.cancel = function () {
             $scope.clear();
