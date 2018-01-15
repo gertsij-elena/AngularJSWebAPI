@@ -85,7 +85,7 @@
             <p style="color:red" ng-show="formAdd.description.$error.required">Description is required.</p>
             </span>
             </p>
-
+=
             <p>Count:<br>
             <select name="count" data-ng-model="Items.Count" required="">
             <option>1</option>
@@ -132,15 +132,11 @@
             <option>6</option>
             <option>7</option>
             <option>8</option>
-            </select>
-           
+            </select>           
             </p>
-
             <button type="submit" class="btn btn-primary" ng-disabled="formUpdate.$invalid" ng-click="update()">Update</button>
             <button data-ng-click="close()">Close</button>
-        </form>
-
-       
+        </form>       
     </div>
  
 </body>
