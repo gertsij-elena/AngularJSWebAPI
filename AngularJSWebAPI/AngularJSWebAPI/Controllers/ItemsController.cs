@@ -1,21 +1,17 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AngularJSWebAPI.Models;
+
 
 namespace AngularJSWebAPI.Controllers
 {
     public class ItemsController : ApiController
     {
         private ItemContext db = new ItemContext();
-
+       
         // GET: api/Items
         [HttpGet]
         public IEnumerable<Item> GetItems()
@@ -34,10 +30,18 @@ namespace AngularJSWebAPI.Controllers
             it.Name = item.Name;
             it.Description = item.Description;
             it.Count = item.Count;
-            db.Items.Add(it);
-            db.SaveChanges();
+            try
+            {
+                db.Items.Add(it);
+                db.SaveChanges();
 
-            return it;
+                return it;
+            }
+            catch
+            {
+                return null;
+            }
+           
         }
 
         // DELETE: api/Items/5

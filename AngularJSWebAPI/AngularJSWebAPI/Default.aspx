@@ -14,7 +14,7 @@
     <script type="text/javascript" src="/Scripts/controller.js"></script>    
     <script type="text/javascript" src="/Scripts/filter.js"></script>
 </head>
-<body>
+<body style="padding-left:3%">
  
     <div ng-app="testapp" ng-controller="testController">        
     
@@ -64,63 +64,76 @@
               </li>
             </ul>
        </div>
+
     <button type="button" ng-click="showAdd()">Add new Item</button>
+        
         <form name="formAdd" novalidate ng-show="add">
-            <label>Name:<br>
-            <input type="text" name="name" data-ng-model="Items.Name" required="" ng-maxlength="50"/>
+            
+            <h3>Add new Item</h3>
+            <p>Name:<br>           
+            <textarea maxlength="30"name="name" data-ng-model="Items.Name" required="" style="width:30%;height:2%;resize:none;"></textarea>           
+            <span>*Not more than 30 character</span>
             <span ng-show="formAdd.name.$touched && formAdd.name.$invalid">
-            <span ng-show="formAdd.name.$error.required">Name is required.</span>
-            <span ng-show="formAdd.name.$error.maxlength">Not more than 50 character</span>
+            <p style="color:red"ng-show="formAdd.name.$error.required">Name is required.</p>
             </span>
-            </label>
+            </p>
 
             <p>Description:<br>
-            <input type="text" name="description" data-ng-model="Items.Description" required="" ng-minlength="5" ng-maxlength="4000"/>
+            <textarea maxlength="100" name="description" data-ng-model="Items.Description" required="" style="width:60%;height:20%;resize:none;"></textarea>
+            <span>*Not more than 50 character</span>
             <span ng-show="formAdd.description.$touched && formAdd.description.$invalid">
-            <span ng-show="formAdd.description.$error.required">Description is required.</span>
-            <span ng-show="formAdd.description.$error.minlength">Not less than 5 character</span>
-            <span ng-show="formAdd.description.$error.maxlength">Not more than 4000 character</span>
+            <p style="color:red" ng-show="formAdd.description.$error.required">Description is required.</p>
             </span>
             </p>
 
             <p>Count:<br>
-            <input type="text" name="count" data-ng-model="Items.Count" required="" min="1" max="1000"/>
-            <span ng-show="formAdd.count.$touched && formAdd.count.$invalid">
-            <span ng-show="formAdd.count.$error.required">Count is required.</span>
-            <span ng-show="formAdd.count.$error.min">So min</span>
-            <span ng-show="formAdd.count.$error.max">Too max</span>
-            </span>
+            <select name="count" data-ng-model="Items.Count" required="">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            </select>  
             </p>
 
             <button type="submit" class="btn btn-primary" ng-disabled="formAdd.$invalid" ng-click="submit()">Save</button>
             <button data-ng-click="cancel()">Cancel</button>
+            </fieldset>
         </form>
 
          <form name="formUpdate" novalidate ng-show="upd">
-            <label>Name:<br>
-            <input type="text" name="name" data-ng-model="ItemEdit.Name" required="" ng-maxlength="50"/>
+            <h3>Update Item</h3>
+            <p>Name:<br>
+            <textarea maxlength="30"name="name" data-ng-model="ItemEdit.Name" required="" style="width:30%;height:2%;resize:none;"></textarea>           
+            <span>*Not more than 30 character</span>
             <span ng-show="formUpdate.name.$touched && formUpdate.name.$invalid">
-            <span ng-show="formUpdate.name.$error.required">Name is required.</span>
-            <span ng-show="formUpdate.name.$error.maxlength">Not more than 50 character</span>
+            <p style="color:red;"ng-show="formUpdate.name.$error.required">Name is required.</p>           
             </span>
-            </label>
+            </p>
 
             <p>Description:<br>
-            <input type="text" name="description" data-ng-model="ItemEdit.Description" required="" ng-minlength="5" ng-maxlength="4000"/>
+            <textarea maxlength="50" name="description" data-ng-model="ItemEdit.Description" required="" style="width:60%;height:20%;resize:none;"></textarea>
+            <span>*Not more than 50 character</span>
             <span ng-show="formUpdate.description.$touched && formUpdate.description.$invalid">
-            <span ng-show="formUpdate.description.$error.required">Description is required.</span>
-            <span ng-show="formUpdate.description.$error.minlength">Not less than 5 character</span>
-            <span ng-show="formUpdate.description.$error.maxlength">Not more than 4000 character</span>
+            <p style="color:red" ng-show="formUpdate.description.$error.required">Description is required.</p>
             </span>
             </p>
 
             <p>Count:<br>
-            <input type="text" name="count" data-ng-model="ItemEdit.Count" required="" min="1" max="1000"/>
-            <span ng-show="formUpdate.count.$touched && formUpdate.count.$invalid">
-            <span ng-show="formUpdate.count.$error.required">Count is required.</span>
-            <span ng-show="formUpdate.count.$error.min">So min</span>
-            <span ng-show="formUpdate.count.$error.max">Too max</span>
-            </span>
+            <select name="count" data-ng-model="ItemEdit.Count" required="">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            </select>
+           
             </p>
 
             <button type="submit" class="btn btn-primary" ng-disabled="formUpdate.$invalid" ng-click="update()">Update</button>

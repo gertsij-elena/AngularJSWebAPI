@@ -40,8 +40,8 @@
 
         // Delete item       
         $scope.delete = function (item) {
-            alert("delete");
-            alert(item.Id);
+            console.log("delete");
+            console.log(item.Id);
             var id = parseInt(item.Id);
             testService.DeleteRecords(id)
                 .then(function successCallback(response) {
@@ -77,8 +77,7 @@
          .then(function successCallback(response) {
              $scope.itemsData.push(response.data);                       
                 $scope.$apply();
-                $scope.clear(); 
-                $scope.add = false;
+                $scope.cancel(); 
 
                }, function errorCallback(response) {
                console.log("Error : " + response.data.ExceptionMessage);
